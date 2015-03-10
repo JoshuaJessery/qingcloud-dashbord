@@ -1,0 +1,59 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+    http_port: 80
+    max_clients: 200
+    database_name: development
+    root_db_username: development
+    root_db_password: development
+  remote_user: vagrant
+  tasks:
+    - name: update to 163 sources
+      copy: src=sources.list dest=/etc/apt/sources.list
+
+    - name: update key
+      shell: gpg --keyserver keyserver.ubuntu.com --recv 3E5C1192
+
+    - name: update key
+      shell: gpg --export --armor 3E5C1192 | sudo apt-key add -
+
+    - name: install python software properties
+      apt: name=python-software-properties state=present
+
+    - name: add oracle jdk repo
+      apt_repository: repo="ppa:webupd8team/java"
+
+    - name: update apt-get local cache
+      shell: apt-get update
+
+    - name : Select java license
+      shell: echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+
+    - name: ensure software is the lastest version
+      apt: name={{item}} state=latest
+      with_items:
+      - mysql-server-5.5
+      - python-mysqldb
+      - oracle-jdk7-installer
+      - maven
+      - git
+
+    - name: ensure and upload my.cnf
+      copy: src=my.cnf dest=/etc/mysql/my.cnf
+      notify:
+        - restart mysql
+
+    - name: Ensure MySQL is running
+      service: name=mysql state=started enabled=true
+      notify:
+        - restart mysql
+
+    - name: Update MySQL Root Password
+      mysql_user: host=% name={{root_db_username}} password={{root_db_password}} priv=*.*:ALL state=present
+
+    - name: Create local development database
+      mysql_db: name={{database_name}} state=present
+  handlers:
+    - name: restart mysql
+      service: name=mysql state=restarted

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views/layouts">
+    <excludes>
+        <pattern>/assets/*</pattern>
+        <pattern>/login</pattern>
+        <pattern>/register*</pattern>
+    </excludes>
+    <decorator name="dashbord" page="layout.jsp">
+        <pattern>/dashbord*</pattern>
+    </decorator>
+</decorators>

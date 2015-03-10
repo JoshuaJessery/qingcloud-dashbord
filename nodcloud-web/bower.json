@@ -1,0 +1,27 @@
+{
+    "name": "nodcloud-web",
+    "version": "0.0.0",
+    "authors": [
+        "yunlzheng <yunl.zheng@gmail.com>"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "src/main/webapp/assets/plugin",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "flexslider": "*",
+        "jquery": "https://github.com/morr/jquery.appear",
+        "appear": "~0.3.3",
+        "jquery.gmap": "~3.3.3",
+        "gmaps": "~0.4.12",
+        "font-awesome": "~4.1.0",
+        "backbone": "~1.1.2",
+        "backbone.localStorage": "~1.1.7",
+        "backbone-forms": "~0.14.0"
+    }
+}

@@ -1,0 +1,7 @@
+.settings
+.project
+.classpath
+target
+*/target
+src/main/webapp/assets/plugins
+
